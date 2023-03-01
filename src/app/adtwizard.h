@@ -61,6 +61,8 @@ public:
 
 private slots:
     void cancelButtonPressed();
+    //
+    void saveButtonPressed();
 
     void currentIdChanged(int currentPageId);
 
@@ -69,6 +71,8 @@ private slots:
 
 signals:
     void cancelPressed(int currentPage);
+    //
+    void savePressed(int currentPage);
 
 private:
     std::unique_ptr<ADTExecutableRunner> checks;

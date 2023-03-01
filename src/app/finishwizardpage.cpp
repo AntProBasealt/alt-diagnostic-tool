@@ -40,3 +40,20 @@ void FinishWizardPage::initializePage()
 {
     wizard()->button(QWizard::CancelButton)->setEnabled(false);
 }
+
+void FinishWizardPage::setButton()
+{
+    wizard()->button(QWizard::CustomButton1)->setEnabled(true);
+    //            QWizard::button(QWizard::CustomButton1)->setEnabled(true);
+    //            FinishWizardPage->setButtonText(QWizard::CustomButton1, "Save button");
+    wizard()->setButtonText(QWizard::CustomButton1, "Save button");
+    //            FinishWizardPage->setButton(SaveButton);
+    wizard()->setOption(QWizard::HaveCustomButton1, true);
+}
+void FinishWizardPage::saveButtonPressed(int currentPage)
+{
+    if (currentPage == ADTWizard::Finish_Page)
+    {
+        wizard()->reject();
+    }
+}
