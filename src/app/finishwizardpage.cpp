@@ -39,6 +39,12 @@ FinishWizardPage::~FinishWizardPage()
 void FinishWizardPage::initializePage()
 {
     wizard()->button(QWizard::CancelButton)->setEnabled(false);
+
+    wizard()->button(QWizard::CustomButton1)->setEnabled(true);
+    wizard()->setButtonText(QWizard::CustomButton1, tr("&Save"));
+             wizard()->setOption(QWizard::HaveCustomButton1, true);
+             connect(wizard(), &QWizard::customButtonClicked,
+                     this, &FinishWizardPage::saveButtonPressed);
 }
 
 void FinishWizardPage::setButton()
