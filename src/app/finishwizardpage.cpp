@@ -46,7 +46,7 @@ void FinishWizardPage::setButton()
     wizard()->button(QWizard::CustomButton1)->setEnabled(true);
     //            QWizard::button(QWizard::CustomButton1)->setEnabled(true);
     //            FinishWizardPage->setButtonText(QWizard::CustomButton1, "Save button");
-    wizard()->setButtonText(QWizard::CustomButton1, "Save button");
+    wizard()->setButtonText(QWizard::CustomButton1, "Save");
     //            FinishWizardPage->setButton(SaveButton);
     wizard()->setOption(QWizard::HaveCustomButton1, true);
 }

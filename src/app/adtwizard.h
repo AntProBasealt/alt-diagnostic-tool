@@ -33,6 +33,7 @@
 #include <QWizard>
 #include <QtDBus/QDBusConnection>
 #include <QtXml/QDomDocument>
+#include <QPushButton>
 
 class ADTWizard : public QWizard
 {
@@ -61,7 +62,7 @@ public:
 
 private slots:
     void cancelButtonPressed();
-    //
+
     void saveButtonPressed();
 
     void currentIdChanged(int currentPageId);
@@ -71,7 +72,7 @@ private slots:
 
 signals:
     void cancelPressed(int currentPage);
-    //
+
     void savePressed(int currentPage);
 
 private:
@@ -90,6 +91,7 @@ private:
     int previousPage;
 
     bool isServiceRegistered = true;
+    std::unique_ptr<QPushButton> saveButton;
 
 private:
     void connectSlotInCurrentPage(int currentPageId);
