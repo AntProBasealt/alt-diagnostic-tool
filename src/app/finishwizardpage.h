@@ -38,8 +38,6 @@ public:
 
     void initializePage() override;
 
-    void setButton();
-
 public slots:
     void saveButtonPressed(int currentPage);
 

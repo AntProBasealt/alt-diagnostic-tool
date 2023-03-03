@@ -59,9 +59,6 @@ ADTWizard::ADTWizard(QJsonDocument &checksData,
 
     setStartId(Intro_Page);
 
-//    QPushButton setOption(QWizard::HaveCustomButton1, false);
-//    setButton(QWizard::CustomButton1, saveButton.get());
-
     disconnect(button(QWizard::CustomButton1), SIGNAL(clicked()), this, SLOT(reject()));
     connect(button(QWizard::CustomButton1),
             &QPushButton::clicked,
@@ -150,16 +147,24 @@ void ADTWizard::currentIdChanged(int currentPageId)
 
     switch (currentPageId)
     {
+    case Intro_Page:
+        ADTWizard::setOption(QWizard::HaveCustomButton1, false);
+        break;
     case Check_Page:
         checkPage.data()->runTasks();
+        ADTWizard::setOption(QWizard::HaveCustomButton1, false);
         break;
 
     case Repair_Page:
         repairPage.data()->runTasks();
+        ADTWizard::setOption(QWizard::HaveCustomButton1, false);
         break;
 
     case Finish_Page:
-        repairPage.data()->runTasks();
+        ADTWizard::setButtonText(QWizard::CustomButton1, tr("&Save"));
+        ADTWizard::setOption(QWizard::HaveCustomButton1, true);
+//        connect(wizard(), &QWizard::customButtonClicked,
+//                   this, &FinishWizardPage*/::saveButtonPressed);
         break;
 
     default:
@@ -203,11 +208,7 @@ void ADTWizard::connectSlotInCurrentPage(int currentPageId)
         break;
 
     case ADTWizard::Intro_Page:
-    case ADTWizard::FinishButton:
-
-        slotConnector->connectSignals(resolvers.get(),
-                                      static_cast<AbstractExecutablePage *>(repairPage.get()));
-        break;
+    case ADTWizard::Finish_Page:
 
     default:
         break;
@@ -230,11 +231,8 @@ void ADTWizard::disconnectSlotInPreviousPage()
         break;
 
     case ADTWizard::Intro_Page:
-    case ADTWizard::FinishButton:
+    case ADTWizard::Finish_Page:
 
-        slotConnector->disconnectSignals(resolvers.get(),
-                                         static_cast<AbstractExecutablePage *>(repairPage.get()));
-        break;
 
     default:
         break;

@@ -41,6 +41,7 @@ private:
 
 public slots:
     void cancelButtonPressed(int currentPage);
+//    void hideSaveButton(int currentPage);
 
 private:
     IntroWizardPage(const IntroWizardPage &) = delete;
