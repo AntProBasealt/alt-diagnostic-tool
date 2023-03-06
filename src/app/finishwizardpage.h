@@ -49,6 +49,7 @@ private:
     FinishWizardPage(FinishWizardPage &&)      = delete;
     FinishWizardPage &operator=(const FinishWizardPage &) = delete;
     FinishWizardPage &operator=(FinishWizardPage &&) = delete;
+    void viewSaveDialog();
 };
 
 #endif // FINISHWIZARDPAGE_H

@@ -21,6 +21,7 @@
 #include "finishwizardpage.h"
 #include "adtwizard.h"
 #include "ui_finishwizardpage.h"
+#include <QFileDialog>
 
 #include <QPushButton>
 
@@ -45,6 +46,12 @@ void FinishWizardPage::saveButtonPressed(int currentPage)
 {
     if (currentPage == ADTWizard::Finish_Page)
     {
-
+        viewSaveDialog();
     }
+}
+
+void FinishWizardPage::viewSaveDialog()
+{
+            QFileDialog::getOpenFileName(
+                this, tr("Save File"), "/home", ("*.txt"));
 }
