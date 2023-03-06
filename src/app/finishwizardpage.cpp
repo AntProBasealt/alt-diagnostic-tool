@@ -46,11 +46,11 @@ void FinishWizardPage::saveButtonPressed(int currentPage)
 {
     if (currentPage == ADTWizard::Finish_Page)
     {
-        viewSaveDialog();
+        saveFileChange();
     }
 }
 
-void FinishWizardPage::viewSaveDialog()
+void FinishWizardPage::saveFileChange()
 {
             QFileDialog::getOpenFileName(
                 this, tr("Save File"), "/home", ("*.txt"));

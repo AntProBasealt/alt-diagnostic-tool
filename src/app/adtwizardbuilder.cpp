@@ -71,7 +71,7 @@ std::unique_ptr<ADTWizard> ADTWizardBuilder::build()
             QObject::tr("Checks file is missing or corrupted. Cannot continue working!"));
         checksMsgBox.setIcon(QMessageBox::Critical);
         checksMsgBox.exec();
-//        return nullptr;
+        return nullptr;
     }
 
     if (resolvers.isEmpty())

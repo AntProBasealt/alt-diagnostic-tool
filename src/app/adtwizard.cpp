@@ -50,7 +50,7 @@ ADTWizard::ADTWizard(QJsonDocument &checksData,
                                              QDBusConnection::systemBus(),
                                              QDBusServiceWatcher::WatchForOwnerChange))
     , previousPage(0)
-    , saveButton(std::make_unique<QPushButton>( "Save", nullptr))
+    , saveButton(std::make_unique<QPushButton>( "", nullptr))
 {
     setPage(Intro_Page, introPage.data());
     setPage(Check_Page, checkPage.data());
@@ -144,27 +144,21 @@ void ADTWizard::currentIdChanged(int currentPageId)
     disconnectSlotInPreviousPage();
 
     previousPage = currentPageId;
+    ADTWizard::setOption(QWizard::HaveCustomButton1, false);
 
     switch (currentPageId)
     {
-    case Intro_Page:
-        ADTWizard::setOption(QWizard::HaveCustomButton1, false);
-        break;
     case Check_Page:
         checkPage.data()->runTasks();
-        ADTWizard::setOption(QWizard::HaveCustomButton1, false);
         break;
 
     case Repair_Page:
         repairPage.data()->runTasks();
-        ADTWizard::setOption(QWizard::HaveCustomButton1, false);
         break;
 
     case Finish_Page:
         ADTWizard::setButtonText(QWizard::CustomButton1, tr("&Save"));
         ADTWizard::setOption(QWizard::HaveCustomButton1, true);
-//        connect(wizard(), &QWizard::customButtonClicked,
-//                   this, &FinishWizardPage*/::saveButtonPressed);
         break;
 
     default:
