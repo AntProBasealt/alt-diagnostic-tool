@@ -33,6 +33,7 @@
 #include <QWizard>
 #include <QtDBus/QDBusConnection>
 #include <QtXml/QDomDocument>
+#include <QPushButton>
 
 class ADTWizard : public QWizard
 {
@@ -62,6 +63,8 @@ public:
 private slots:
     void cancelButtonPressed();
 
+    void saveButtonPressed();
+
     void currentIdChanged(int currentPageId);
 
     void dBusServiceUnregistered();
@@ -69,6 +72,8 @@ private slots:
 
 signals:
     void cancelPressed(int currentPage);
+
+    void savePressed(int currentPage);
 
 private:
     std::unique_ptr<ADTExecutableRunner> checks;
@@ -86,6 +91,7 @@ private:
     int previousPage;
 
     bool isServiceRegistered = true;
+    std::unique_ptr<QPushButton> saveButton;
 
 private:
     void connectSlotInCurrentPage(int currentPageId);

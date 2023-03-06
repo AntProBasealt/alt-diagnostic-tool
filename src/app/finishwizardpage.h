@@ -38,6 +38,9 @@ public:
 
     void initializePage() override;
 
+public slots:
+    void saveButtonPressed(int currentPage);
+
 private:
     Ui::FinishWizardPage *ui;
 
@@ -46,6 +49,7 @@ private:
     FinishWizardPage(FinishWizardPage &&)      = delete;
     FinishWizardPage &operator=(const FinishWizardPage &) = delete;
     FinishWizardPage &operator=(FinishWizardPage &&) = delete;
+    void saveFileChange();
 };
 
 #endif // FINISHWIZARDPAGE_H

@@ -21,6 +21,7 @@
 #include "finishwizardpage.h"
 #include "adtwizard.h"
 #include "ui_finishwizardpage.h"
+#include <QFileDialog>
 
 #include <QPushButton>
 
@@ -39,4 +40,18 @@ FinishWizardPage::~FinishWizardPage()
 void FinishWizardPage::initializePage()
 {
     wizard()->button(QWizard::CancelButton)->setEnabled(false);
+}
+
+void FinishWizardPage::saveButtonPressed(int currentPage)
+{
+    if (currentPage == ADTWizard::Finish_Page)
+    {
+        saveFileChange();
+    }
+}
+
+void FinishWizardPage::saveFileChange()
+{
+            QFileDialog::getOpenFileName(
+                this, tr("Save File"), "/home", ("*.txt"));
 }

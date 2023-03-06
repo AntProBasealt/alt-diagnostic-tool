@@ -50,6 +50,7 @@ ADTWizard::ADTWizard(QJsonDocument &checksData,
                                              QDBusConnection::systemBus(),
                                              QDBusServiceWatcher::WatchForOwnerChange))
     , previousPage(0)
+    , saveButton(std::make_unique<QPushButton>( "", nullptr))
 {
     setPage(Intro_Page, introPage.data());
     setPage(Check_Page, checkPage.data());
@@ -57,6 +58,18 @@ ADTWizard::ADTWizard(QJsonDocument &checksData,
     setPage(Finish_Page, finishPage.data());
 
     setStartId(Intro_Page);
+
+    disconnect(button(QWizard::CustomButton1), SIGNAL(clicked()), this, SLOT(reject()));
+    connect(button(QWizard::CustomButton1),
+            &QPushButton::clicked,
+            this,
+            &ADTWizard::saveButtonPressed);
+
+    connect(this, &ADTWizard::savePressed, finishPage.get(), &FinishWizardPage::saveButtonPressed);
+    connect(this,
+            &ADTWizard::savePressed,
+            finishPage.get(),
+            &FinishWizardPage::saveButtonPressed);
 
     disconnect(button(QWizard::CancelButton), SIGNAL(clicked()), this, SLOT(reject()));
     connect(button(QWizard::CancelButton),
@@ -119,6 +132,11 @@ void ADTWizard::cancelButtonPressed()
 {
     emit cancelPressed(currentId());
 }
+//
+void ADTWizard::saveButtonPressed()
+{
+    emit savePressed(currentId());
+}
 
 void ADTWizard::currentIdChanged(int currentPageId)
 {
@@ -126,6 +144,7 @@ void ADTWizard::currentIdChanged(int currentPageId)
     disconnectSlotInPreviousPage();
 
     previousPage = currentPageId;
+    ADTWizard::setOption(QWizard::HaveCustomButton1, false);
 
     switch (currentPageId)
     {
@@ -135,6 +154,11 @@ void ADTWizard::currentIdChanged(int currentPageId)
 
     case Repair_Page:
         repairPage.data()->runTasks();
+        break;
+
+    case Finish_Page:
+        ADTWizard::setButtonText(QWizard::CustomButton1, tr("&Save"));
+        ADTWizard::setOption(QWizard::HaveCustomButton1, true);
         break;
 
     default:
@@ -178,7 +202,8 @@ void ADTWizard::connectSlotInCurrentPage(int currentPageId)
         break;
 
     case ADTWizard::Intro_Page:
-    case ADTWizard::FinishButton:
+    case ADTWizard::Finish_Page:
+
     default:
         break;
     }
@@ -200,7 +225,9 @@ void ADTWizard::disconnectSlotInPreviousPage()
         break;
 
     case ADTWizard::Intro_Page:
-    case ADTWizard::FinishButton:
+    case ADTWizard::Finish_Page:
+
+
     default:
         break;
     }
